@@ -19,7 +19,7 @@
 
   export default {
     name: 'Home',
-    metaInfo(){
+    metaInfo() {
       return {title: this.$title('Menu_Bill')}
     },
     data() {
@@ -32,9 +32,9 @@
       HomeBill: () => import('@/components/HomeBill'),
       HomeCurrency: () => import('@/components/HomeCurrency')
     },
-    methods:{
-      async refresh(){
-        this.loading=true;
+    methods: {
+      async refresh() {
+        this.loading = true;
         this.currency = await this.$store.dispatch('fetchCurrency');
         this.loading = false;
       }
