@@ -105,15 +105,17 @@
           this.$v.$touch();
           return
         }
-        this.loading=true;
+        this.loading = true;
         const formData = {
           email: this.email,
           password: this.password
         };
         try {
           await this.$store.dispatch('login', formData);
+          this.email = '';
+          this.password = '';
           this.$router.push('/');
-          this.loading=false;
+          this.loading = false;
         } catch (e) {
         }
       },
