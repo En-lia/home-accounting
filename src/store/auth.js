@@ -35,29 +35,28 @@ export default {
         throw e;
       }
     },
-    async deleteTestUser({dispatch, commit}) {
-      try {
-        const uid = await dispatch('getUid');
-        const info = (await firebase.database().ref(`/users/${uid}/info`).once("value")).val();
-        if (!info.temp) {
-
-          return
-        }
+    async deleteTestUser({}, uid ) {
         await firebase.database().ref(`/users/${uid}`).remove();
         await firebase.auth().currentUser.delete();
-      } catch (e) {
-        commit('setError', e);
-        throw e;
-      }
     },
     getUid() {
       const user = firebase.auth().currentUser;
       return user ? user.uid : null;
     },
     async logout({dispatch, commit}) {
-      await dispatch('deleteTestUser');
-      await firebase.auth().signOut();
-      commit('clearInfo');
+      try {
+        const uid = await dispatch('getUid');
+        const info = (await firebase.database().ref(`/users/${uid}/info`).once("value")).val();
+        if (info.temp) {
+          await dispatch('deleteTestUser', uid);
+        } else {
+          await firebase.auth().signOut();
+        }
+        commit('clearInfo');
+      } catch (e) {
+        commit('setError', e);
+        console.log(e);
+      }
     },
 
   }
