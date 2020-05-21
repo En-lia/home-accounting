@@ -35,9 +35,10 @@ export default {
         throw e;
       }
     },
-    async deleteTestUser({}, uid ) {
-        await firebase.database().ref(`/users/${uid}`).remove();
-        await firebase.auth().currentUser.delete();
+    async deleteTestUser({}, uid) {
+      await firebase.database().ref(`/users/${uid}`).remove();
+      const user = firebase.auth().currentUser;
+      if (user) await user.delete();
     },
     getUid() {
       const user = firebase.auth().currentUser;
