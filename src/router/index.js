@@ -67,12 +67,17 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
-  const currentUser = firebase.auth().currentUser;
+router.beforeEach(async (to, from, next) => {
+  const currentUser = await firebase.auth().currentUser;
   const requireAuth = to.matched.some(record => record.meta.auth);
-  if (requireAuth && !currentUser) {
+  const hasInfo = currentUser
+      ? (await firebase.database().ref(`/users/${currentUser.uid}/info`).once("value")).val()
+      : {};
+  if ((requireAuth && !currentUser)) {
     next('/login?message=login');
-  }else {
+  } else if (requireAuth && currentUser && !hasInfo) {
+    next('/login');
+  } else {
     next();
   }
 });
