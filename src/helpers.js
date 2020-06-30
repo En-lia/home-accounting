@@ -1,6 +1,29 @@
-import localizeFilter from '@/filters/localize.filter';
+import localizeFilter from './filters/localize.filter';
 
-export const sortData = (data, options) => {
+//Apr 30, 2020 => 2020-04-30T00:00:00.000Z
+export const dateToString = (value) => {
+  if(!value) return;
+  const date = new Date(value);
+  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())).toISOString();
+};
+
+//2020-04-30T00:00:00.000Z => 4-2020
+export const createDate = (date) => {
+  if(!date) return;
+  const d = new Date(date);
+  const month = d. getMonth() + 1;
+  const year = d. getFullYear();
+  return month + "-" + year;
+};
+
+//4-2020 => April 2020
+export const getDateString = (date) =>{
+  if(!date) return;
+  const arr = date.split('-');
+  return `${localizeFilter(`month-${arr[0]}`)} ${arr[1]}`
+};
+
+export const sortTableData = (data, options) => {
   if (!options) {
     return data;
   }
@@ -33,27 +56,3 @@ export const sortData = (data, options) => {
     }
   }
 };
-
-//Apr 30, 2020 => 2020-04-30T00:00:00.000Z
-export const dateToString = (value) => {
-  if(!value) return;
-  const date = new Date(value);
-  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())).toISOString();
-};
-
-//2020-04-30T00:00:00.000Z => 4-2020
-export const createDate = (date) => {
-  if(!date) return;
-  const d = new Date(date);
-  const month = d. getMonth() + 1;
-  const year = d. getFullYear();
-  return month + "-" + year;
-};
-
-//4-2020 => April 2020
-export const getDateString = (date) =>{
-  if(!date) return;
-  const arr = date.split('-');
-  return `${localizeFilter(`month-${arr[0]}`)} ${arr[1]}`
-};
-

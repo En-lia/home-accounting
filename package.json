@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build & Xcopy /E /I dist docs"
+    "build": "vue-cli-service build & Xcopy /E /I dist docs",
+    "test": "jest"
   },
   "dependencies": {
     "@amcharts/amcharts4": "^4.9.18",
@@ -27,6 +28,7 @@
     "@vue/cli-plugin-router": "^4.3.0",
     "@vue/cli-plugin-vuex": "^4.3.0",
     "@vue/cli-service": "^4.3.0",
+    "jest": "^26.1.0",
     "node-sass": "^4.12.0",
     "prettier": "2.0.5",
     "sass-loader": "^8.0.2",

@@ -40,7 +40,7 @@
   import {mapGetters} from 'vuex';
   import currencyFilter from '@/filters/currency.filter';
   import localizeFilter from '@/filters/localize.filter';
-  import {getDateString, sortData} from '@/helpers';
+  import {getDateString, sortTableData} from '@/helpers';
   import _ from 'lodash';
 
   export default {
@@ -70,7 +70,7 @@
       }
     },
     async mounted() {
-      const records = sortData(await this.$store.dispatch('fetchRecords'), {
+      const records = sortTableData(await this.$store.dispatch('fetchRecords'), {
         key: 'date',
         type: 'date',
         sort: 'up-down'

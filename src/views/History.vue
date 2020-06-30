@@ -45,7 +45,7 @@
 
 <script>
   import paginationMixin from '@/mixins/pagination.mixin';
-  import {sortData, dateToString, createDate, getDateString} from '@/helpers'
+  import {sortTableData, dateToString, createDate, getDateString} from '@/helpers'
   import localizeFilter from '@/filters/localize.filter';
   import _ from 'lodash';
   import * as am4core from "@amcharts/amcharts4/core";
@@ -105,7 +105,7 @@
           this.setup();
           return
         }
-        this.records = sortData(await this.$store.dispatch('fetchRecordsByMonth', date), {
+        this.records = sortTableData(await this.$store.dispatch('fetchRecordsByMonth', date), {
           key: 'date',
           type: 'date',
           sort: 'up-down'
@@ -145,7 +145,7 @@
         this.tableLoader = false;
       },
       sort(options) {
-        this.setupPagination(sortData(this.tableRecords, options));
+        this.setupPagination(sortTableData(this.tableRecords, options));
       },
 
       async updateRecords() {
@@ -153,7 +153,7 @@
       },
 
       async setup() {
-        this.records = sortData(await this.$store.dispatch('fetchRecords'), {
+        this.records = sortTableData(await this.$store.dispatch('fetchRecords'), {
           key: 'date',
           type: 'date',
           sort: 'up-down'
